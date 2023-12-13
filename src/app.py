@@ -44,6 +44,14 @@ def handle_hello():
 
     return jsonify(all_users), 200
 
+@app.route('/users/<int:theid>', methods=['GET'])
+def users_by_id(theid=None):
+    users = User.query.get(theid)
+    if users is None:
+        return jsonify({"Message": "User does not exist yet"}), 404 
+
+    return jsonify(users.serialize(), 200)
+
 @app.route('/people', methods=['GET'])
 def list_characters():
     people = People.query.all()
@@ -56,7 +64,7 @@ def list_characters():
 def characters_by_id(theid=None):
     people = People.query.get(theid)
     if people is None:
-        return jsonify({"Menssage": "People does not exist yet"}), 404 
+        return jsonify({"Message": "People does not exist yet"}), 404 
 
     return jsonify(people.serialize(), 200)
 
@@ -73,7 +81,7 @@ def planets_list():
 def planets_by_id(theid=None):
     planet = Planets.query.get(theid)
     if planet is None:
-        return jsonify({"Menssage":"Planet does not exist yet"}), 404
+        return jsonify({"Message":"Planet does not exist yet"}), 404
     else:
         return jsonify(planet.serialize()), 200
     
