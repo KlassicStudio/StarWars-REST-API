@@ -94,7 +94,7 @@ def get_user_favorites(theid=None):
     
     favorites = Favorite.query.filter_by(user_id=theid).all()
     if favorites is None:
-        return jsonify({"Menssage":"This user has no favorites"})
+        return jsonify({"Message":"This user has no favorites"})
     favorites_list = []
     for item in favorites:
         favorites_list.append(item.serialize())
