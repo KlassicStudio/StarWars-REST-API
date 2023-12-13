@@ -36,7 +36,7 @@ def handle_invalid_usage(error):
 def sitemap():
     return generate_sitemap(app)
 
-@app.route('/user', methods=['GET'])
+@app.route('/users', methods=['GET'])
 def handle_hello():
 
     users = User.query.all()
@@ -77,18 +77,10 @@ def planets_by_id(theid=None):
     else:
         return jsonify(planet.serialize()), 200
     
-@app.route('/user', methods=['GET'])
-def all_users():
-    user = User.query.all()
-    user_list = []
-    for item in user:
-        user_list.append(item.serialize())
-    return jsonify(user_list), 200
-
 @app.route('/user/favorites/<int:theid>', methods=['GET'])
 def get_user_favorites(theid=None):
     if theid is None:
-        return jsonify({"Menssage":"User not found"}), 404
+        return jsonify({"Message":"User not found"}), 404
      
     
     favorites = Favorite.query.filter_by(user_id=theid).all()
@@ -117,10 +109,10 @@ def add_planets_favorites(planets_number, user_number):
 
     try:
         db.session.commit()
-        return jsonify({"Menssage":"The favorite was added"}), 200
+        return jsonify({"Message":"The favorite was added"}), 200
     except Exception as error:
         db.session.rollback()
-        return jsonify({"Menssage":f"{error}"})
+        return jsonify({"Message":f"{error}"})
     
 @app.route('/favorites/people/<int:people_number>/<int:user_number>', methods=['POST'])
 def add_people_favorites(people_number, user_number):
@@ -129,10 +121,10 @@ def add_people_favorites(people_number, user_number):
     user = User.query.get(user_number)
 
     if user is None:
-        return jsonify({"Menssge":"User does not exist yet"})
+        return jsonify({"Message":"User does not exist yet"})
     
     if favorite is not None:
-        return jsonify({"Menssage":"This favorite already exist"})
+        return jsonify({"Message":"This favorite already exist"})
     
     add_favorite = Favorite(user_id = user_number, people_id = people_number)
     db.session.add(add_favorite)
@@ -164,7 +156,7 @@ def delete_people_favorite(people_number, user_number):
     favorite = Favorite.query.filter_by(user_id = user_number, people_id = people_number).first()
 
     if favorite is None:
-        return jsonify({"Menssage":"Favorite does not exist"}), 404
+        return jsonify({"Message":"Favorite does not exist"}), 404
     
     try:
         db.session.delete(favorite)
