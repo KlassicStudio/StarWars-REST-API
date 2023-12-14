@@ -76,9 +76,9 @@ class People(db.Model):
 
 class Favorite(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    planets_id = db.Column(db.Integer, db.ForeignKey('planets.id'))
-    people_id = db.Column(db.Integer, db.ForeignKey('people.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=False, nullable=True)
+    planets_id = db.Column(db.Integer, db.ForeignKey('planets.id'), unique=False, nullable=True)
+    people_id = db.Column(db.Integer, db.ForeignKey('people.id'), unique=False, nullable=True)
 
     def __repr__ (self):
         return '<Favorite %r>' % self.id

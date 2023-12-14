@@ -58,15 +58,15 @@ def list_characters():
     people_list =[]
     for item in people:
         people_list.append(item.serialize())
-    return jsonify(people_list), 200 
+    return jsonify(people_list)
 
 @app.route('/people/<int:theid>', methods=['GET'])
 def characters_by_id(theid=None):
     people = People.query.get(theid)
     if people is None:
-        return jsonify({"Message": "People does not exist yet"}), 404 
+        return jsonify({"Message": "People does not exist yet"})
 
-    return jsonify(people.serialize(), 200)
+    return jsonify(people.serialize())
 
 @app.route('/planets', methods=['GET'])
 def planets_list():
@@ -74,7 +74,7 @@ def planets_list():
     planet_list = []
     for item in planet:
         planet_list.append(item.serialize())
-    return jsonify(planet_list), 200
+    return jsonify(planet_list)
 
 # planets_id
 @app.route('/planets/<int:theid>', methods=['GET'])
@@ -83,12 +83,12 @@ def planets_by_id(theid=None):
     if planet is None:
         return jsonify({"Message":"Planet does not exist yet"}), 404
     else:
-        return jsonify(planet.serialize()), 200
+        return jsonify(planet.serialize())
     
 @app.route('/user/favorites/<int:theid>', methods=['GET'])
 def get_user_favorites(theid=None):
     if theid is None:
-        return jsonify({"Message":"User not found"}), 404
+        return jsonify({"Message":"User not found"})
      
     
     favorites = Favorite.query.filter_by(user_id=theid).all()
